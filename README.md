@@ -49,10 +49,6 @@ Only the split after `ESC [` loses the report.
 | `parser.test.ts` split after ESC [: the report survives | fail: response + 10 keys, expected `["mouse(scroll)"]` |
 | `input.test.ts` a wheel report split after ESC [ does not type into a focused input | fail: expected `""`, received `"<64;87;26M"` |
 
-## Checking a fix
-
-The tests run against the installed `@opentui/core`. To check a fix, install its build in place of 0.6.3, for example the preview package that `/pkg-preview` on the fix's PR publishes, and run `bun test`. With the fix, all five tests pass.
-
 ## In a real app
 
 The symptom: in a terminal app on `@opentui/core` with a focused `<input>`, scrolling a list with the mouse wheel sometimes types `<64;87;26M` into the input.
