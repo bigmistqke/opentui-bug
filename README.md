@@ -49,17 +49,9 @@ Only the split after `ESC [` loses the report.
 | `parser.test.ts` split after ESC [: the report survives | fail: response + 10 keys, expected `["mouse(scroll)"]` |
 | `input.test.ts` a wheel report split after ESC [ does not type into a focused input | fail: expected `""`, received `"<64;87;26M"` |
 
-## Test for the OpenTUI suite
+## Checking a fix
 
-`upstream-test.patch` adds one test to `packages/core/src/lib/stdin-parser.test.ts`, next to the existing "after timed-out ESC" recovery tests. It uses the suite's `createTimedParser`, `snap` and `sgr` helpers. It does not check what the parser emits when `ESC [` times out. It checks only that the rest of the report becomes one scroll event.
-
-```sh
-git apply upstream-test.patch    # from the root of an anomalyco/opentui checkout
-cd packages/core
-bun test src/lib/stdin-parser.test.ts -t "scroll continuation"
-```
-
-On `main` at `157415c` (Release v0.6.3), the new test fails: it receives ten key events instead of the scroll event. The existing test for a split after `ESC` alone passes.
+The tests run against the installed `@opentui/core`. To check a fix, install its build in place of 0.6.3, for example the preview package that `/pkg-preview` on the fix's PR publishes, and run `bun test`. With the fix, all five tests pass.
 
 ## In a real app
 
