@@ -1,0 +1,27 @@
+diff --git a/packages/core/src/lib/stdin-parser.test.ts b/packages/core/src/lib/stdin-parser.test.ts
+index 06141cf..25f544f 100644
+--- a/packages/core/src/lib/stdin-parser.test.ts
++++ b/packages/core/src/lib/stdin-parser.test.ts
+@@ -1915,6 +1915,22 @@ describe("StdinParser", () => {
+       }
+     })
+ 
++    test("after timed-out ESC [, scroll continuation still becomes a mouse event", () => {
++      const { parser, clock } = createTimedParser()
++      try {
++        parser.push(Buffer.from("\x1b["))
++        clock.advance(10)
++        snap(parser)
++
++        parser.push(Buffer.from("<64;87;26M"))
++        expect(snap(parser)).toEqual([
++          sgr("\x1b[<64;87;26M", "scroll", 86, 25, { scroll: { direction: "up", delta: 1 } }),
++        ])
++      } finally {
++        parser.destroy()
++      }
++    })
++
+     test("after timed-out ESC, split continuation across pushes is recovered as mouse input", () => {
+       const { parser, clock } = createTimedParser()
+       try {
