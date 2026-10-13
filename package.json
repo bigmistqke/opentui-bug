@@ -1,0 +1,13 @@
+{
+  "name": "opentui-bug",
+  "private": true,
+  "type": "module",
+  "description": "Minimal reproduction: an SGR mouse report split after ESC [ across the 20 ms timeout becomes typed keys",
+  "scripts": {
+    "test": "bun test",
+    "probe": "bun probe.ts"
+  },
+  "dependencies": {
+    "@opentui/core": "0.6.3"
+  }
+}
