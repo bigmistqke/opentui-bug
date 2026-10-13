@@ -1,6 +1,6 @@
 # opentui-bug
 
-Minimal reproduction for a bug in `@opentui/core` 0.6.3 (also in 0.5.12), on Bun 1.4.2.
+Minimal reproduction for a bug in `@opentui/core` 0.6.3 on Bun 1.4.2. 0.5.12 on Node 26 shows the same bug.
 
 An SGR mouse report that arrives in two reads, split right after `ESC [`, becomes typed keys when the second read comes more than 20 ms after the first.
 
